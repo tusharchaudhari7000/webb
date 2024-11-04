@@ -1,0 +1,258 @@
+
+*********************************************EXP1=Data Manipulation in Python using Pandas*******************************************
+
+import pandas as pd
+
+
+# Step 1: Create the initial DataFrame
+data = {	
+    'Name': ['Ram', 'Shyam', 'Shiv'],
+    'Age': [18, 16, 20],
+    'City': ['New Delhi', 'Mumbai', 'Kolkata']
+}
+df = pd.DataFrame(data)
+
+# Display the original DataFrame
+print("Original DataFrame:")
+print(df)
+print()
+
+# Step 2: Add a new column
+address = ['New Delhi', 'Mumbai', 'Kolkata']
+df['Address'] = address
+
+# Step 3: Add a new row
+df.loc[len(df.index)] = ['Ganesh', 12, 'Hyderabad']
+
+# Step 4: Delete specific rows (e.g., with index 1 and 2)
+df.drop([1, 2], axis=0, inplace=True)
+
+# Step 5: Delete specific columns (e.g., 'City' and 'Address')
+df.drop(['City', 'Address'], axis=1, inplace=True)
+
+
+# Step 6: Rename columns
+df.rename(columns={'Name': 'First Name', 'Age': 'Age (Years)', 'City': 'Location'}, inplace=True)
+
+# Step 7: Rename row labels (index)
+df.rename(index={0: 'A', 1: 'B', 2: 'C'}, inplace=True)
+
+
+
+
+
+**************************************EXP2=Calculating Mean, Median, variance and plotting Correlation and Normal Distribution of a data using Python.**********************************
+
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import statistics as stats
+from scipy.stats import norm
+
+# Create the initial dataset
+data = np.array([168, 170, 150, 160, 182, 140, 175, 191, 152, 150])
+
+# 1. Calculate mean
+mean = np.mean(data)
+print("Mean:", mean)
+
+# 2. Calculate median
+data_sorted = np.sort(data)
+median = np.median(data_sorted)
+print("Median:", median)
+
+# 3. Calculate mode
+mode = stats.mode(data)
+print("Mode:", mode.mode[0])  # mode returns a ModeResult object
+
+# 4. Calculate variance
+variance = np.var(data)
+print("Variance:", variance)
+
+# 5. Calculate standard deviation
+std_dev = np.std(data)
+print("Standard Deviation:", std_dev)
+
+# 6. Generate a random dataset and calculate its mean
+random_data = np.random.randint(10, 10000, size=50)
+random_mean = np.mean(random_data)
+print("Random Data Mean:", random_mean)
+
+# 7. Correlation example with orbital period and distance from the sun
+orbital_period = np.array([88, 225, 365, 460, 687, 1200, 2223, 3831, 5854, 8756, 10015, 20687, 30765, 40190])
+dist_from_sun = np.array([58, 108, 250, 328, 486, 978, 1287, 1890, 2060, 2396, 3400, 3845, 4500, 4800])
+correlation_coeff = np.corrcoef(orbital_period, dist_from_sun)
+print("Correlation Coefficient:\n", correlation_coeff)
+
+# 8. Normal distribution function
+def normal_dist(x, mean, sd):
+    prob_density = (1 / (np.sqrt(2 * np.pi) * sd)) * np.exp(-0.5 * ((x - mean) / sd) ** 2)
+    return prob_density
+
+# Calculate normal distribution for a given x
+x = 1
+normal_result = normal_dist(x, mean, std_dev)
+print("Normal Distribution Result for x=1:", normal_result)
+
+# 9. Plotting the normal distribution
+x_axis = np.arange(-10, 10, 0.01)
+plt.plot(x_axis, norm.pdf(x_axis, mean, std_dev), label='Normal Distribution')
+plt.title('Normal Distribution Curve')
+plt.xlabel('Value')
+plt.ylabel('Probability Density')
+plt.legend()
+plt.grid()
+plt.show()
+
+# 10. Create a normal distribution data and plot histogram
+mean_distribution = 100
+std_dev_distribution = 5
+size_distribution = 100000
+
+# Creating a normal distribution dataset
+values = np.random.normal(mean_distribution, std_dev_distribution, size_distribution)
+
+# Plotting histogram
+plt.hist(values, bins=100, alpha=0.7, color='blue', edgecolor='black')
+plt.axvline(values.mean(), color='k', linestyle='dashed', linewidth=2, label='Mean Line')
+plt.title('Histogram of Normal Distribution')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.legend()
+plt.grid()
+plt.show()
+
+
+
+
+
+
+
+
+
+************** EXP 3Importing and exporting CSV files using Pandas in Python and analyzing data (like shape, display of data in CSV file, checking missing value, and correlation) 
+in CSV files.
+
+
+import pandas as pd
+
+# Load the CSV file (Replace 'your_file.csv' with your actual file path)
+df = pd.read_csv('your_file.csv')
+
+# Basic Data Analysis
+# 1. Shape of the DataFrame
+print("Shape of the data:", df.shape)
+
+# 2. Display the first 5 rows of data
+print("\nFirst few rows of data:")
+print(df.head())
+
+# 3. Display the last 5 rows of data
+print("\nLast few rows of data:")
+print(df.tail())
+
+# 4. Check for missing values in each column
+print("\nMissing values in each column:")
+print(df.isnull().sum())
+
+# 5. Display the data types of each column
+print("\nData types of each column:")
+print(df.dtypes)
+
+# 6. Summary of the DataFrame
+print("\nSummary of the DataFrame:")
+print(df.info())
+
+# 7. Descriptive statistics for numeric columns
+print("\nDescriptive statistics of numeric columns:")
+print(df.describe())
+
+# 8. Memory usage of the DataFrame
+print("\nMemory usage of each column:")
+print(df.memory_usage())
+
+# 9. Correlation matrix
+print("\nCorrelation matrix:")
+print(df.corr())
+
+# Optional: Export the DataFrame to a new CSV file
+df.to_csv('output_file.csv', index=False)  # Replace 'output_file.csv' with desired file path/name
+ 
+
+*****************************************************Importing dataset (CSV file) and Python program to demonstrate the various plots using Matplotlib library on dataset. *****************
+
+
+
+
+1. Pandas Read CSV in Python 
+import pandas as pd 
+import numpy as np 
+import matplotlib.pyplot as plt 
+df = pd.read_csv("E:\Data Science and Visualization\Lab Manual ISO\DSV 
+Practicals\diabetes.csv") 
+df 
+
+
+
+2. Drop the Columns and Rows 
+df= df.drop(columns=['Pregnancies', 'SkinThickness', 
+'DiabetesPedigreeFunction', 'Insulin', 'Outcome']) 
+df 
+ 
+df = df.drop(df.index[10:]) 
+df 
+
+
+#create a line plot of different color for each feature 
+df.plot(kind='line', color=['red','blue','brown','green']) 
+#Set title to "Features responsible for diabetes" 
+plt.title('Features responsible for diabetes') 
+#Label x axis as "Observations" 
+plt.xlabel('Observations') 
+#Label y axis as "Values" 
+plt.ylabel('Values') 
+#Display the figure 
+plt.show() 
+
+
+
+#plots a bar chart  
+df.plot(kind='bar', title='diabetes prediction') 
+#set title, set xlabel and ylabel 
+plt.xlabel('Obervations') 
+plt.ylabel('Values') 
+plt.show() 
+
+
+x= df['Age'] 
+y= df['Glucose'] 
+plt.scatter(x,y) 
+plt.title('Diabetes Prediction') 
+plt.xlabel('Age') 
+plt.ylabel('Glucose') 
+plt.show() 
+
+
+df.plot(kind='hist',title='diabetes prediction') 
+plt.show() 
+
+
+
+df.plot(kind='pie',y='Glucose', title='Diabetes Prediction', legend=False, 
+autopct="%.2f%%") 
+plt.show() 
+
+
+
+df.plot(kind='box') 
+#set title,xlabel,ylabel 
+plt.title('Diabetes Prediction') 
+plt.xlabel('Index') 
+plt.ylabel('Values') 
+plt.show() 
+
+
+
+
